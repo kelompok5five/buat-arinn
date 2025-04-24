@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buat Arinn 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Pacifico', cursive;
+      text-align: center;
+      background: linear-gradient(to top right, #ffd6e0, #ffe6f0);
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    h1 {
+      color: #e60073;
+      font-size: 2.5rem;
+      margin-top: 100px;
+    }
+
+    .buttons {
+      margin-top: 40px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #ff66a3;
+      color: white;
+      animation: pulse 1s infinite;
+    }
+
+    #noBtn {
+      background-color: #dddddd;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .heart {
+      position: fixed;
+      top: -20px;
+      color: red;
+      animation: fall 3s linear infinite;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    #popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #fff0f6;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .popup-content h2 {
+      color: #cc0066;
+      margin-bottom: 10px;
+    }
+
+    .popup-content button {
+      margin-top: 20px;
+      background: #ff66a3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌸 Alloo Arinn, Mau ga kalo aku jadi pacar kamu? 🌸</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Ya 💖</button>
+    <button id="noBtn">Ngga dulu, maaf 😢</button>
+  </div>
+
+  <!-- Popup Notifikasi -->
+  <div id="popup">
+    <div class="popup-content">
+      <h2>💞 Selamat! 💞</h2>
+      <p id="popupText"></p>
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    let size = 20;
+
+    noBtn.addEventListener('click', () => {
+      size += 10;
+      yesBtn.style.fontSize = size + "px";
+    });
+
+    yesBtn.addEventListener('click', () => {
+      const today = new Date();
+      const tgl = today.toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      document.getElementById("popupText").textContent = `Yeaaay! Kita resmi jadian tanggal ${tgl} 💞💘`;
+      document.getElementById("popup").style.display = "flex";
+      generateHearts();
+    });
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function generateHearts() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heart.textContent = "❤️";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3000);
+      }
+    }
+  </script>
+
+</body>
+</html>
