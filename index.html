@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buat Arinn 🌸</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     body {
       font-family: 'Pacifico', cursive;
@@ -109,16 +111,17 @@
     <button id="noBtn">Ngga dulu, maaf 😢</button>
   </div>
 
-  <!-- Popup Notifikasi -->
   <div id="popup">
     <div class="popup-content">
-      <h2>💞 Selamat! 💞</h2>
+      <h2>💞 Yeaaayy! 💞</h2>
       <p id="popupText"></p>
       <button onclick="closePopup()">Tutup</button>
     </div>
   </div>
 
   <script>
+    emailjs.init('EOpbyO8sMGia5kXuw'); // ← GANTI dengan public key kamu
+
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     let size = 20;
@@ -126,6 +129,7 @@
     noBtn.addEventListener('click', () => {
       size += 10;
       yesBtn.style.fontSize = size + "px";
+      sendEmail('Tidak, maaf 😢');
     });
 
     yesBtn.addEventListener('click', () => {
@@ -135,13 +139,15 @@
         month: 'long',
         year: 'numeric'
       });
-      document.getElementById("popupText").textContent = `Yeaaay! Kita resmi jadian tanggal ${tgl} 💞💘`;
+      document.getElementById("popupText").textContent = `Kita resmi jadian yaaa ${tgl} 💞💘`;
       document.getElementById("popup").style.display = "flex";
       generateHearts();
+      sendEmail('Ya 💖');
     });
 
     function closePopup() {
       document.getElementById("popup").style.display = "none";
+      window.close(); // untuk menutup halaman jika diizinkan browser
     }
 
     function generateHearts() {
@@ -157,6 +163,19 @@
           heart.remove();
         }, 3000);
       }
+    }
+
+    function sendEmail(response) {
+      emailjs.send('service_e7duc77', 'template_fnlbt6z', {
+        name: 'Pacar Web',  // ini masuk ke {{name}}
+        email: 'no-reply@example.com',  // ini masuk ke {{email}}
+        message: response  // ini masuk ke {{message}} sesuai template kamu
+      })
+      .then(() => {
+        console.log('Email terkirim!');
+      }, (error) => {
+        console.log('Gagal kirim email:', error);
+      });
     }
   </script>
 
